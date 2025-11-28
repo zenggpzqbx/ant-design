@@ -244,12 +244,16 @@ const InternalSelect = <
 
   // ===================== Empty =====================
   let mergedNotFound: React.ReactNode;
-  if (notFoundContent !== undefined) {
-    mergedNotFound = notFoundContent;
-  } else if (mode === 'combobox') {
+  if (mode === 'combobox') {
     mergedNotFound = null;
+  } else if (React.isValidElement(notFoundContent)) {
+    mergedNotFound = notFoundContent;
   } else {
-    mergedNotFound = renderEmpty?.('Select') || <DefaultRenderEmpty componentName="Select" />;
+    mergedNotFound =
+      renderEmpty?.('Select') ||
+      /*#__PURE__*/ React.createElement(DefaultRenderEmpty, {
+        componentName: 'Select',
+      });
   }
 
   // ===================== Icons =====================
